@@ -85,7 +85,7 @@ export default {
       return;
     }
 
-    if (self.keydown || e.shape) {
+    if (self.keydown || e.type) {
       return;
     }
 
@@ -118,7 +118,7 @@ export default {
   },
   onMouseMove(e: IG6GraphEvent) {
     const { graph } = this;
-    if (this.keydown || e.shape) {
+    if (this.keydown || e.type) {
       return;
     }
 
@@ -148,7 +148,7 @@ export default {
   onMouseUp(e: IG6GraphEvent) {
     const { graph } = this;
 
-    if (this.keydown || e.shape) {
+    if (this.keydown || e.type) {
       return;
     }
 

@@ -41,8 +41,6 @@ The life cycle of an instance of Graph is: Initialize -> Load data -> Render -> 
 | animateCfg.<br />easing | string | easeLinear | The easing function name of animation. Please refer to ease in d3. |
 | minZoom | Number | 0.2 | The minimum zoom ratio. |
 | maxZoom | Number | 10 | The maximum zoom ratio. |
-| groupType | string | circle | Group type for nodes. Options: `'circle'` or `'rect'`. |
-| groupStyle | Object |  | Group style for nodes, please refer to [Node Group](/en/docs/manual/middle/discard/nodeGroup) for detail. |
 | layout | Object |  | Configurations for layout. The `type` in it is the name of layout method with the options: `'random'`, `'radial'`, `'mds'`, `'circular'`, `'fruchterman'`, `'force'`, `'dagre'`, `'concentric'`, `'grid'`. For more configurations for different layout methods, please refer to [Layout API](/en/docs/api/layout/Layout). |
 | renderer | string | 'canvas' / 'svg' | Render the graph with Canvas or SVG. It is supported expecting V3.3.x |
 | enabledStack | boolean | false | Whether to enable stack，that is, whether to support redo & undo operation. Support by V3.6 and latter versions. |
@@ -118,56 +116,6 @@ Render the graph with data onto the canvas.
 
 ```javascript
 graph.render();
-```
-
-### renderCustomGroup(data, groupType)
-
-Render a node group according to the data.
-
-**Parameters**
-
-| Name      | Type   | Required | Description                                         |
-| --------- | ------ | -------- | --------------------------------------------------- |
-| data      | Object | true     | The data to be rendered                             |
-| groupType | string | true     | Type of node group. Options: `'circle'` or `'rect'` |
-
-**Usage**
-
-```javascript
-const data = {
-  nodes: [
-    {
-      id: 'node1',
-      groupId: 'group1',
-      label: 'node1',
-    },
-    {
-      id: 'node2',
-      groupId: 'group1',
-      label: 'node2',
-    },
-  ],
-  edges: [
-    {
-      source: 'node1',
-      target: 'node2',
-    },
-  ],
-  groups: [
-    {
-      id: 'group1',
-      title: {
-        text: 'My Group 1',
-        stroke: '#444',
-        offsetX: -20,
-        offsetY: 30,
-      },
-    },
-  ],
-};
-
-// graph is an instance of Graph
-graph.renderCustomGroup(data, 'circle');
 ```
 
 ### read(data)
@@ -336,43 +284,11 @@ Ungroup the combo, which deletes the combo itself, and appends the children of t
 graph.uncombo('combo1')
 ```
 
-### collapseGroup(groupId)
-
-Collapse the group with groupId. After collapsing, the nodes and edges inside the group will be hided, the edges linking inside nodes and outside nodes will be linked to the group.
-
-**Parameters**
-
-| Name    | Type   | Required | Description          |
-| ------- | ------ | -------- | -------------------- |
-| groupId | string | true     | The id of the group. |
-
-**Usage**
-
-```javascript
-graph.collapseGroup('groupId');
-```
-
-### expandGroup(groupId)
-
-Expand the group to show the inside nodes and edges, and the edges linking inside nodes and outside nodes will be restored.
-
-**Parameters**
-
-| Name    | Type   | Required | Description          |
-| ------- | ------ | -------- | -------------------- |
-| groupId | string | true     | The id of the group. |
-
-**Usage**
-
-```javascript
-graph.expandGroup('groupId');
-```
-
 ## Update
 
 ### addItem(type, model, stack)
 
-Add item(node, edge, or group) to the graph.
+Add item(node or edge) to the graph.
 
 <span style="background-color: rgb(251, 233, 231); color: rgb(139, 53, 56)"><strong>⚠️ Attention:</strong></span> G6 will use the `model` object as the model of the newly added item, and the `model` might be modified. If you do not want it to be modified, use the deep cloned `model` instead.
 

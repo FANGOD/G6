@@ -41,8 +41,6 @@ Graph 的生命周期为：初始化—>加载数据—>渲染—>更新—>销�
 | animateCfg.<br />easing | string | easeLinear | 动画动效，可参见 d3 ease。 |
 | minZoom | Number | 0.2 | 最小缩放比例 |
 | maxZoom | Number | 10 | 最大缩放比例 |
-| groupType | string | circle | 节点分组类型，支持 circle 和 rect |
-| groupStyle | Object |  | groupStyle 用于指定分组的样式，详情参看 [节点分组 Group](/zh/docs/manual/middle/discard/nodeGroup) 教程 |
 | layout | Object |  | 布局配置项，使用 type 字段指定使用的布局方式，type 可取以下值：random, radial, mds, circular, fruchterman, force, dagre，各布局详细的配置请参考  [Layout API 文档](/zh/docs/api/layout/Layout) |
 | renderer | string | 'canvas' / 'svg' | 渲染方式，该配置项除 V3.3.x 外其他版本均支持。 |
 | enabledStack | boolean | false | 是否启用 stack，即是否开启 redo & undo 功能，该配置项 V3.6 及以上版本支持。 |
@@ -118,56 +116,6 @@ graph.data(data);
 
 ```javascript
 graph.render();
-```
-
-### renderCustomGroup(data, groupType)
-
-根据提供的数据渲染组群。
-
-**参数**
-
-| 名称      | 类型   | 是否必选 | 描述                                  |
-| --------- | ------ | -------- | ------------------------------------- |
-| data      | Object | true     | 渲染图的数据                          |
-| groupType | string | true     | group 类型，支持 `'circle'`、`'rect'` |
-
-**用法**
-
-```javascript
-const data = {
-  nodes: [
-    {
-      id: 'node1',
-      groupId: 'group1',
-      label: 'node1',
-    },
-    {
-      id: 'node2',
-      groupId: 'group1',
-      label: 'node2',
-    },
-  ],
-  edges: [
-    {
-      source: 'node1',
-      target: 'node2',
-    },
-  ],
-  groups: [
-    {
-      id: 'group1',
-      title: {
-        text: 'Group 1',
-        stroke: '#444',
-        offsetX: -20,
-        offsetY: 30,
-      },
-    },
-  ],
-};
-
-// graph 是 Graph 的实例
-graph.renderCustomGroup(data, 'circle');
 ```
 
 ### read(data)
@@ -335,43 +283,11 @@ graph.createCombo({
 graph.uncombo('combo1')
 ```
 
-### collapseGroup(groupId)
-
-收起分组，收起分组后，隐藏分组中的所有节点和边，分组外部与分组内节点有连线的则临时连接到分组上面。
-
-**参数**
-
-| 名称    | 类型   | 是否必选 | 描述    |
-| ------- | ------ | -------- | ------- |
-| groupId | string | true     | 分组 ID |
-
-**用法**
-
-```javascript
-graph.collapseGroup('groupId');
-```
-
-### expandGroup(groupId)
-
-展开分组，显示分组中的所有节点和边，恢复收起前的连接情况。
-
-**参数**
-
-| 名称    | 类型   | 是否必选 | 描述    |
-| ------- | ------ | -------- | ------- |
-| groupId | string | true     | 分组 ID |
-
-**用法**
-
-```javascript
-graph.expandGroup('groupId');
-```
-
 ## 更新
 
 ### addItem(type, model, stack)
 
-新增元素（节点，边，或节点分组）。
+新增元素（节点，边）。
 
 <span style="background-color: rgb(251, 233, 231); color: rgb(139, 53, 56)"><strong>⚠️ 注意: </strong></span>将会直接使用 `model` 对象作为新增元素的数据模型，G6 内部可能会对其增加或修改一些必要的字段。若不希望原始参数被修改，建议在使用深拷贝后的 `model`。
 
